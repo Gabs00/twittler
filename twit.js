@@ -11,23 +11,35 @@ $(document).ready(function(){
       index -= 1;
     }
     */
-    update_stream();
+
+
+    var history_divs = (function(){
+        var max = 10;
+        var results = [];
+        for(var i = 0; i < max; i++){
+          results.push(create_elem('<div hidden></div>', '', 'messages', 'm_'+i));
+          $(results[i]).prependTo('#history');
+        }
+        return results;
+    })();
+
+    setInterval(function(){ 
+      update_stream();
+    }, 3000);
+
     function update_stream(){
         var index = streams.home.length-1;
         while(index >=0){
           var tweet = streams.home[index];
           var text = '@' + tweet.user + ': ' + tweet.message;
-          var div = create_div('<div></div>', text, 'messages');
-          var history = $('#history').children();
-          if($(history).length >= 10){
-             $('history').last().remove();
-          }
-          $(div).prependTo('#history');
+          var div = history_divs[index];
+          $(div).text(text);
+          $(div).show();
           index-=1;
         }
     }
 
-    function create_div(type, text, item_class, item_id){
+    function create_elem(type, text, item_class, item_id){
       if(!type){
         return undefined;
       }
