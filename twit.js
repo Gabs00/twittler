@@ -12,6 +12,8 @@ $(document).ready(function(){
     }
     */
 
+    window.visitor = prompt('Please enter a username:'); //temporary setting
+    streams.users[visitor] = [];
 
     var history_divs = (function(){
         var max = 10;
@@ -22,17 +24,33 @@ $(document).ready(function(){
         }
         return results;
     })();
+
     update_stream();
     setInterval(function(){ 
       update_stream();
     }, 15000);
 
+    $('#send').on('click', function(){
+      var text = $('#message').val();
+      if(text){
+        if(text.length > 140){
+          alert('You can not send a tweet that is more than 140 characters long');
+          return;
+        }
+        else{
+          writeTweet(text);
+          update_stream();
+        }
+       }
+
+    });
     function update_stream(){
         var index = streams.home.length-1;
-        while(index >=0){
-          var tweet = streams.home[index];
+        var diff = index;
+        while(index >=diff - 10){
+          var tweet = streams.home[diff - index];
           var text = '@' + tweet.user + ': ' + tweet.message;
-          var div = history_divs[index];
+          var div = history_divs[diff - index];
           $(div).text(text);
           $(div).show();
           index-=1;
