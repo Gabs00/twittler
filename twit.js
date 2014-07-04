@@ -22,10 +22,10 @@ $(document).ready(function(){
         }
         return results;
     })();
-
+    update_stream();
     setInterval(function(){ 
       update_stream();
-    }, 3000);
+    }, 15000);
 
     function update_stream(){
         var index = streams.home.length-1;
