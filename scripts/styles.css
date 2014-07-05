@@ -1,0 +1,105 @@
+/*
+	REFERENCE:
+	    <div id="container">
+	      <div class ="user-timeline" hidden></div>
+	      <div class="send-tweet">
+	        <input type="text" id="message" />
+	        <input type="button" value="SEND" id="send" />
+	      </div>
+	      <div id = "div_history">
+	        <ul id='history'></ul>
+	      </div>
+	    </div>
+
+*/
+
+body {
+	font-family:  Arial, Helvetica, sans-serif;
+	overflow: auto;
+}
+div {
+	width:650px;
+	height:270px;
+}
+li {
+	list-style: none;
+	width: 97%;
+	margin-bottom:3px;
+	margin-left:1%;
+	border: 1px solid;
+	border-radius: 5px;
+	background-color: #c0deed;
+	box-shadow: 3px 3px 2px #888888;
+	padding-left: 5px;
+	padding-bottom: 1px;
+}
+
+#container {
+	position:static;
+	height:290px;
+	width:50%;
+	box-shadow: 2px 1px 2px #888888;
+	margin-left:25%;
+	margin-right:25%;
+	border-left: 2px solid;
+	border-right: 2px solid;
+	border-radius: 15px;
+	background-color: #0084b4;
+}
+#view {
+	position:static;
+	padding:0;
+	margin-left:12px;
+	margin-top:1px;
+	height:80%;
+
+}
+
+.user-timeline {
+	position:relative;
+	height:270px;
+	width:100%;
+	box-shadow: 2px 1px 2px #888888;
+	border-left: 1px solid;
+	border-right: 1px solid;
+	margin-bottom:0;
+	border-radius:15px;
+	background-color: #ffffff;
+}
+.send-tweet {
+	position:relative;
+	top:-3px;
+	left:10px;
+	height:20px;
+	padding:0;
+}
+
+#message {
+	position:relative;
+	width:522px;
+	margin-top:0;
+	margin-left:0;
+	border-radius: 5px;
+}
+
+#send {
+	position:relative;
+	border-radius: 5px;
+	width:100px;
+	margin-right:0;
+	background-color: #00aced;
+}
+
+#div-history {
+	position:relative;
+	box-shadow: 2px 1px 2px #888888;
+	border-left: 1px solid;
+	border-right: 1px solid;
+	border-radius: 15px;
+	background-color: #ffffff;
+}
+
+#history {
+	margin:0px;
+	padding:5px 0 0 0;
+}
