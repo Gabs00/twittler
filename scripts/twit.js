@@ -17,6 +17,7 @@ $(document).ready(function(){
 
     var last = 0; //this keeps track of the last index pulled while checking for timeline updates
     var timeline = timeline_container('#history'); //timeline_container is in Timeline.js
+    var user_timeline = [visitor, timeline_container('#user')];
 
     update_stream();
     setInterval(function(){ 
@@ -46,6 +47,9 @@ $(document).ready(function(){
           var tweet = streams.home[index];
           var text = '@' + tweet.user + ': ' + tweet.message;
           timeline.add(text);
+          if(tweet.user === user_timeline[0]){
+            user_timeline[1].add(text);
+          }
           index++;
         }
         last = index;

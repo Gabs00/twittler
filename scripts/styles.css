@@ -21,6 +21,10 @@ div {
 	width:650px;
 	height:270px;
 }
+ul {
+	margin:0px;
+	padding:5px 0 0 0;
+}
 li {
 	list-style: none;
 	width: 97%;
@@ -61,7 +65,7 @@ li {
 	box-shadow: 2px 1px 2px #888888;
 	border-left: 1px solid;
 	border-right: 1px solid;
-	top:10px;
+	top:5px;
 	border-radius:15px;
 	background-color: #ffffff;
 }
@@ -98,7 +102,4 @@ li {
 	background-color: #ffffff;
 }
 
-#history {
-	margin:0px;
-	padding:5px 0 0 0;
-}
+
