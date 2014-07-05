@@ -45,9 +45,12 @@ function timeline_container(item_id, outer_arrays,item_style){
         }
 
         tl.displayed.unshift([item]);
-        
+
         if(tl.length >= 10){
-            tl.bottom.unshift(tl.displayed.pop().shift());
+            var store = tl.displayed.pop().shift();
+            if(tl.bottom.length < 100){
+                tl.bottom.unshift(store);
+            }
         }       
         
         tl.length++;
