@@ -15,15 +15,8 @@ $(document).ready(function(){
     window.visitor = prompt('Please enter a username:'); //temporary setting
     streams.users[visitor] = [];
 
-    var history_divs = (function(){
-        var max = 10;
-        var results = [];
-        for(var i = 0; i < max; i++){
-          results.push(create_elem('<div hidden></div>', '', 'messages', 'm_'+i));
-          $(results[i]).prependTo('#history');
-        }
-        return results;
-    })();
+    var last = 0; //this keeps track of the last index pulled while checking for timeline updates
+    var timeline = timeline_container('#history'); //timeline_container is in Timeline.js
 
     update_stream();
     setInterval(function(){ 
@@ -45,33 +38,14 @@ $(document).ready(function(){
 
     });
     function update_stream(){
-        var index = streams.home.length-1;
-        var diff = index;
-        while(index >=diff - 10){
-          var tweet = streams.home[diff - index];
+      var index = last;
+        while(index < streams.home.length){
+          var tweet = streams.home[index];
           var text = '@' + tweet.user + ': ' + tweet.message;
-          var div = history_divs[diff - index];
-          $(div).text(text);
-          $(div).show();
-          index-=1;
+          timeline.add(text);
+          index++;
         }
-    }
-
-    function create_elem(type, text, item_class, item_id){
-      if(!type){
-        return undefined;
-      }
-      var new_div = $(type);
-      if(item_class){
-        $(new_div).prop('class', item_class);
-      }
-      if(item_id){
-        $(new_div).prop('id', item_id)
-      }
-      if(text){
-        $(new_div).text(text);
-      }
-      return new_div;
+        last = index;
     }
 
 });
