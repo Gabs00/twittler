@@ -46,6 +46,9 @@ Timeline.prototype.Update = function(){
 
 function timeline_container(item_id, outer_arrays,item_style){
     var tl = new Timeline(item_id, outer_arrays, item_style);
+    var max_display = tl.limits.max_display;
+    var max_bottom = tl.limits.max_bottom;
+    var max_top = tl.limits.max_top;
     function add_new(item){
         if(item === undefined){
              return undefined;   
@@ -53,9 +56,9 @@ function timeline_container(item_id, outer_arrays,item_style){
 
         tl.displayed.unshift([item]);
 
-        if(tl.length > 10){
+        if(tl.length >= max_display[0]){
             var store = tl.displayed.pop().shift();
-            if(tl.bottom.length < 100){
+            if(tl.bottom.length < max_bottom){
                 tl.bottom.unshift(store);
             }
         }       
@@ -65,7 +68,7 @@ function timeline_container(item_id, outer_arrays,item_style){
     }
 
     function more(amount){
-        var max = 22 - 10;
+        var max = max_display[1] - max_display[0];
         if(amount === undefined){
             amount = max;   
         }
@@ -83,7 +86,7 @@ function timeline_container(item_id, outer_arrays,item_style){
     }
     
     function less(amount){
-        var max = tl.displayed.length - 10;
+        var max = tl.displayed.length - max_display[0];
 
         if(amount === undefined){
              amount = max;
@@ -105,5 +108,6 @@ function timeline_container(item_id, outer_arrays,item_style){
         add: add_new,
         more: more,
         less: less,
+        limits: tl.limits,
     };
 }
