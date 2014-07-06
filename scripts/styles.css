@@ -15,7 +15,6 @@
 
 body {
 	font-family:  Arial, Helvetica, sans-serif;
-	overflow: auto;
 }
 div {
 	width:650px;
@@ -67,7 +66,7 @@ li {
 	border-right: 1px solid;
 	top:5px;
 	border-radius:15px;
-	background-color: #ffffff;
+	background-color: #ffffff;s
 }
 .send-tweet {
 	position:relative;

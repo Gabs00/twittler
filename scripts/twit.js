@@ -6,13 +6,16 @@ $(document).ready(function(){
     //timeline_container is in Timeline.js
     //manages the history and user timeline view
     var timeline = timeline_container('#history'); 
+    var initial_message = "Hello " + visitor + " your tweets will appear here for now...";
     var user_timeline = [visitor, timeline_container('#user')];
 
     //Keeps track of tweets seen when retrieving from streams
     var iter_hist = get_tweets(streams.home);
-    var iter_user = get_tweets(streams.users[user_timeline[0]]);
+    var iter_user = get_tweets(streams.users[visitor]);
 
     update_stream();
+    update_user_stream();
+
     setInterval(function(){ 
       update_stream();
     }, 10000);
@@ -35,20 +38,22 @@ $(document).ready(function(){
           else{
             writeTweet(text);
             update_stream();
+            update_user_stream();
           }
          }
     });
 
     $('#history').on('click','.users', function(event) {
         $('#user').empty();
-        
+
         //Changes current user timeline
         var username = $(this).attr('id');
         user_timeline = [username, timeline_container('#user')];
         iter_user= get_tweets(user_timeline[1]);
-        
-        event.stopImmediatePropagation();
         update_user_stream();
+
+        event.stopImmediatePropagation();
+
       });
 
     function update_stream(){
@@ -69,6 +74,7 @@ $(document).ready(function(){
       var tweet;
 
       while(tweet = iter_user(streams.users[user_timeline[0]])){
+        
           var span = '<span><em>@' + tweet.user +'</em></span>';
           var text = span + ': ' + tweet.message;
           
@@ -81,15 +87,16 @@ $(document).ready(function(){
   function get_tweets(tweet_array){
     var index = 0;
     return function(updated_array){
-        var tweet
+        var tweet;
         if(updated_array){
-          tweet = updated_array[index];
           tweet_array = updated_array;
         }
-        else if(tweet_array > index){
+        
+        if(tweet_array.length > index){
           var tweet = tweet_array[index];
+          index++;
         }
-        index++;
+        
         return tweet;
       }
   }
@@ -113,12 +120,26 @@ $(document).ready(function(){
           }
 
           var other = panels[0];
+          var tl= user_timeline[1];
+          var other_tl = timeline;
+
           if($(this).attr('id') === $(other).attr('id')){
-              other = panels[1];   
+              other = panels[1];
+              other_tl = user_timeline[1];
+              tl = timeline;
           }
           
           var _this_height = $(this).attr('height');
           var _other_height = $(other).attr('height');
+
+          other_tl.less();
+          
+          if(tl.length() < tl.limits.max_display[1]){
+            tl.more();
+          }
+
+          update_stream();
+          update_user_stream();
           $(other).animate({height:"0"},
                                      { duration:300, 
                                        complete: function(){
@@ -135,10 +156,12 @@ $(document).ready(function(){
           var parent = panels[3];
           if($(target).attr('id') !== $(parent).attr('id')){
               if($(panels[0]).height() > panels[4] ) {
-                  $(panels[1]).show();            
+                  $(panels[1]).show();
+                  timeline.less();            
               }
               else{
-                  $(panels[0]).show()            
+                  $(panels[0]).show();
+                  user_timeline[1].less();         
               }
               $(panels[0]).animate({height:panels[4]});
               $(panels[1]).animate({height:panels[5]});
