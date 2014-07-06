@@ -28,7 +28,7 @@ ul {
 li {
 	list-style: none;
 	width: 97%;
-	margin-bottom:3px;
+	margin-bottom:2px;
 	margin-left:5px;
 	border: 1px solid;
 	border-radius: 5px;
@@ -103,3 +103,6 @@ li {
 }
 
 
+span {
+	color:#0084b4;
+}
