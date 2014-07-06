@@ -40,13 +40,13 @@ Timeline.prototype.Update = function(){
 function timeline_container(item_id, outer_arrays,item_style){
     var tl = new Timeline(item_id, outer_arrays, item_style);
     function add_new(item){
-        if(!item){
+        if(item === undefined){
              return undefined;   
         }
 
         tl.displayed.unshift([item]);
 
-        if(tl.length >= 10){
+        if(tl.length > 10){
             var store = tl.displayed.pop().shift();
             if(tl.bottom.length < 100){
                 tl.bottom.unshift(store);
@@ -57,7 +57,46 @@ function timeline_container(item_id, outer_arrays,item_style){
         tl.Update();
     }
 
+    function more(amount){
+        var max = 22 - 10;
+        if(amount === undefined){
+            amount = max;   
+        }
+        if(amount > tl.bottom.length){
+            amount= tl.bottom.length;   
+        }
+        var i = 0;
+        while(i < amount){
+            tl.displayed.push([tl.bottom.shift()]);
+            tl.length++;
+            i++;   
+        }
+        
+        tl.Update();        
+    }
+    
+    function less(amount){
+        var max = tl.displayed.length - 10;
+        
+        if(amount === undefined){
+             amount = max;
+        }
+
+        if(amount > max){
+            amount = 0;
+        }
+
+        var i = 0;
+        while(i < amount){
+            tl.bottom.unshift(tl.displayed.pop().shift()); 
+            tl.length--;
+            i++;
+        }
+        tl.Update();
+    }
     return {
         add: add_new,
+        more: more,
+        less: less,
     };
 }

@@ -41,7 +41,7 @@ $(document).ready(function(){
 
     $('#history').on('click','.users', function(event) {
         $('#user').empty();
-
+        
         //Changes current user timeline
         var username = $(this).attr('id');
         user_timeline = [username, timeline_container('#user')];
