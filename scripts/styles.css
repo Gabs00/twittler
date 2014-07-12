@@ -19,7 +19,6 @@ body {
 div {
 	width:650px;
 	height:270px;
-	font-size: small;
 }
 ul {
 	margin:0px;
@@ -68,7 +67,7 @@ li {
 	border-right: 1px solid;
 	top:5px;
 	border-radius:15px;
-	background-color: #ffffff;s
+	background-color: #ffffff;
 }
 .send-tweet {
 	position:relative;
