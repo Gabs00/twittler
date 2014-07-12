@@ -1,4 +1,4 @@
-/*
+r/*
 	REFERENCE:
 	    <div id="container">
 	      <div class ="user-timeline" hidden></div>
@@ -19,6 +19,7 @@ body {
 div {
 	width:650px;
 	height:270px;
+	font-size: small;
 }
 ul {
 	margin:0px;
@@ -35,6 +36,7 @@ li {
 	box-shadow: 3px 3px 2px #888888;
 	padding-left: 5px;
 	padding-bottom: 1px;
+	padding-right:10px;
 }
 
 #container {
@@ -101,7 +103,12 @@ li {
 	background-color: #ffffff;
 }
 
-
+.scrollbars {
+	overflow:auto;
+}
+sub {
+	float:right;
+}
 span {
 	color:#0084b4;
 }

@@ -31,8 +31,7 @@ $(document).ready(function(){
 
         var text = $('#message').val();
         if(text){
-          if(text.length > 140){
-            alert('You can not send a tweet that is more than 140 characters long');
+          if(text.length <= 0){
             return;
           }
           else{
@@ -61,7 +60,7 @@ $(document).ready(function(){
 
         while(tweet = iter_hist(streams.home)){
           var span = '<span class="users" id="'+ tweet.user+'""><em>@'
-                              + tweet.user +'</em></span>';
+                              + tweet.user +'</em></span>$'+tweet.created_at+'$';
           var text = span + ': ' + tweet.message;
           timeline.add(text);
           if(tweet.user === user_timeline[0]){
@@ -74,8 +73,8 @@ $(document).ready(function(){
       var tweet;
 
       while(tweet = iter_user(streams.users[user_timeline[0]])){
-        
-          var span = '<span><em>@' + tweet.user +'</em></span>';
+
+          var span = '<span><em>@' + tweet.user +'</em></span>$'+tweet.created_at+'$';
           var text = span + ': ' + tweet.message;
           
           user_timeline[1].add(text);

@@ -26,17 +26,61 @@ Timeline.prototype.limits = {
         max_top: 100,
 };
 
+Timeline.prototype.get_time = function(date){
+    var now = new Date(Date.now());
+    if(same_hour(date, now)){
+     return get_diff(date, now);
+    }
+    else{
+        var ampm;
+        if(date.getHours() > 12){
+            ampm = " pm";
+        }
+        else{
+            ampm = " am";
+        }
+        var time = date.getDate()+"/"+date.getMonth()+ " "+date.getHours() + ":" +date.getMinutes()+ampm;
+        return time;
+    }
+    
+    function same_hour(start, end){
+        if(start.getHours()-end.getHours()===0){
+            if(start.getDate()-end.getDate() === 0){
+                if(start.getMonth()-end.getMonth()===0){
+                    if(start.getFullYear()-end.getFullYear()===0){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
+    function get_diff(start, end){
+        var min_diff = end.getMinutes() - start.getMinutes();
+        if(min_diff){
+            return min_diff + " minutes ago";
+        }
+        else{
+            return (end.getSeconds() - start.getSeconds())+
+            " seconds ago";
+        }
+    }
+}
 Timeline.prototype.Update = function(){ 
     $(this.list).empty();
     var len = this.displayed.length-1;
     for(var i = len; i >= 0; i--){
             
         var value = this.displayed[i];
+        var time_format = value[0].match(/\$(.+?)\$:/);
+        var time_match = this.get_time(new Date(time_format[1]));
+        var out = value[0].replace('$'+time_format[1]+'$:', ': <sub>' +time_match+ '</sub>');
         var list_id = "h_" + i;
         
         $(value[1]).remove();
             
-        var new_item = $('<li>'+value[0]+'</li>');
+        var new_item = $('<li>'+out+'</li>');
         $(new_item).attr('id', list_id);
         $(new_item).prependTo($(this.list));
             
