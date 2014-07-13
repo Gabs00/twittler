@@ -21,9 +21,9 @@ function Timeline(item_id, arrays, item_style){
 Timeline.prototype = new Object();
 Timeline.prototype.constructor = new Timeline();
 Timeline.prototype.limits = {
-        max_display: [10,21],
-        max_bottom: 100,
-        max_top: 100,
+        max_display: [10,21], //Max bottom and max displayed are total entries stored
+        max_bottom: 100,    
+        max_top: 5, //max top is increments popped out of top when scrolling
 };
 
 Timeline.prototype.get_time = function(date){
@@ -165,6 +165,7 @@ function timeline_container(item_id, outer_arrays,item_style){
             i++;
         }
         
+
         
     }
     return {
