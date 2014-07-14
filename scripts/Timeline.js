@@ -19,7 +19,7 @@ function Timeline(item_id, arrays, item_style){
 
 Timeline.prototype = new Object();
 Timeline.prototype.constructor = new Timeline();
-Timeline.prototype.limits = {
+Timeline.prototype.CONSTANTS = {
         max_display: [10,21], //Max hidden and max displayed are total entries stored
         max_hidden: 100,    
 };
@@ -90,8 +90,8 @@ Timeline.prototype.Update = function(){
 function timeline_container(item_id, outer_arrays,item_style){
     var tl = new Timeline(item_id, outer_arrays, item_style);
 
-    var max_display = tl.limits.max_display;
-    var max_hidden = tl.limits.max_hidden;
+    var max_display = tl.CONSTANTS.max_display;
+    var max_hidden = tl.CONSTANTS.max_hidden;
 
     //for tracking display area size
     var is_open = false;
@@ -176,7 +176,7 @@ function timeline_container(item_id, outer_arrays,item_style){
             tl.Update();
         }
         less: less,
-        limits: tl.limits,
+        CONSTANTS: function(){ return tl.CONSTANTS },
         is_open: function(){
             return is_open;
         },
