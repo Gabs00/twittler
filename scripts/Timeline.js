@@ -174,7 +174,7 @@ function timeline_container(item_id, outer_arrays,item_style){
             }
             return max_display[1];
             tl.Update();
-        }
+        },
         less: less,
         CONSTANTS: function(){ return tl.CONSTANTS },
         is_open: function(){
