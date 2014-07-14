@@ -24,47 +24,7 @@ Timeline.prototype.CONSTANTS = {
         max_hidden: 100,    
 };
 
-Timeline.prototype.get_time = function(date){
-    var now = new Date(Date.now());
-    if(same_hour(date, now)){
-     return get_diff(date, now);
-    }
-    else{
-        var ampm;
-        if(date.getHours() > 12){
-            ampm = " pm";
-        }
-        else{
-            ampm = " am";
-        }
-        var time = date.getDate()+"/"+date.getMonth()+ " "+date.getHours() + ":" +date.getMinutes()+ampm;
-        return time;
-    }
-    
-    function same_hour(start, end){
-        if(start.getHours()-end.getHours()===0){
-            if(start.getDate()-end.getDate() === 0){
-                if(start.getMonth()-end.getMonth()===0){
-                    if(start.getFullYear()-end.getFullYear()===0){
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-    
-    function get_diff(start, end){
-        var min_diff = end.getMinutes() - start.getMinutes();
-        if(min_diff){
-            return min_diff + " minutes ago";
-        }
-        else{
-            return (end.getSeconds() - start.getSeconds())+
-            " seconds ago";
-        }
-    }
-}
+Timeline.prototype.Time = new Timeline_Time();
 Timeline.prototype.Update = function(){ 
     //abstract
     throw new Error('You must define the Update method');

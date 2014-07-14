@@ -12,7 +12,8 @@ $(document).ready(function(){
                     
                 var value = this.displayed[i];
                 var time_format = value[0].match(/\$(.+?)\$:/);
-                var time_match = this.get_time(new Date(time_format[1]));
+                this.Time.set_time(new Date(time_format[1]));
+                var time_match = this.Time.gft();
                 var out = value[0].replace('$'+time_format[1]+'$:', ': <sub>' +time_match+ '</sub>');
                 var list_id = "h_" + i;
                 
@@ -154,8 +155,8 @@ $(document).ready(function(){
           var _other_height = $(other).attr('height');
 
           other_tl.less();
-          
-          if(tl.length() < tl.limits.max_display[1]){
+          var tl_constants = tl.CONSTANTS();
+          if(tl.length() < tl_constants.max_display[1]){
             tl.more();
           }
 
