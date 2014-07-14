@@ -5,9 +5,31 @@ $(document).ready(function(){
 
     //timeline_container is in Timeline.js
     //manages the history and user timeline view
-    var timeline = timeline_container('#history'); 
+    var update = function(){ 
+            $(this.list).empty();
+            var len = this.displayed.length-1;
+            for(var i = len; i >= 0; i--){
+                    
+                var value = this.displayed[i];
+                var time_format = value[0].match(/\$(.+?)\$:/);
+                var time_match = this.get_time(new Date(time_format[1]));
+                var out = value[0].replace('$'+time_format[1]+'$:', ': <sub>' +time_match+ '</sub>');
+                var list_id = "h_" + i;
+                
+                $(value[1]).remove();
+                    
+                var new_item = $('<li>'+out+'</li>');
+                $(new_item).attr('id', list_id);
+                $(new_item).prependTo($(this.list));
+                    
+                value[1]=$(new_item);
+            }
+            this.length = this.displayed.length;
+        }
+
+    var timeline = timeline_container('#history', update); 
     var initial_message = "Hello " + visitor + " your tweets will appear here for now...";
-    var user_timeline = [visitor, timeline_container('#user')];
+    var user_timeline = [visitor, timeline_container('#user', update)];
 
     //Keeps track of tweets seen when retrieving from streams
     var iter_hist = get_tweets(streams.home);
@@ -47,7 +69,7 @@ $(document).ready(function(){
 
         //Changes current user timeline
         var username = $(this).attr('id');
-        user_timeline = [username, timeline_container('#user')];
+        user_timeline = [username, timeline_container('#user', update)];
         iter_user= get_tweets(user_timeline[1]);
         update_user_stream();
 

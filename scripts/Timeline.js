@@ -1,4 +1,4 @@
-function Timeline(item_id, arrays, item_style){
+function Timeline(item_id, update, arrays, item_style){
     
     if(!arrays){
         arrays = [[],[]];   
@@ -66,29 +66,13 @@ Timeline.prototype.get_time = function(date){
     }
 }
 Timeline.prototype.Update = function(){ 
-    $(this.list).empty();
-    var len = this.displayed.length-1;
-    for(var i = len; i >= 0; i--){
-            
-        var value = this.displayed[i];
-        var time_format = value[0].match(/\$(.+?)\$:/);
-        var time_match = this.get_time(new Date(time_format[1]));
-        var out = value[0].replace('$'+time_format[1]+'$:', ': <sub>' +time_match+ '</sub>');
-        var list_id = "h_" + i;
-        
-        $(value[1]).remove();
-            
-        var new_item = $('<li>'+out+'</li>');
-        $(new_item).attr('id', list_id);
-        $(new_item).prependTo($(this.list));
-            
-        value[1]=$(new_item);
-    }
-    this.length = this.displayed.length;
+    //abstract
+    throw new Error('You must define the Update method');
 }
 
-function timeline_container(item_id, outer_arrays,item_style){
+function timeline_container(item_id, update, outer_arrays,item_style){
     var tl = new Timeline(item_id, outer_arrays, item_style);
+    tl.Update = update;
 
     var max_display = tl.CONSTANTS.max_display;
     var max_hidden = tl.CONSTANTS.max_hidden;
