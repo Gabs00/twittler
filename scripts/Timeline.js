@@ -26,7 +26,7 @@ Timeline.prototype.CONSTANTS = {
 
 Timeline.prototype.Time = new Timeline_Time();
 Timeline.prototype.Update = function(){ 
-    //abstract
+    //abstract, impliment in container
     throw new Error('You must define the Update method');
 }
 
@@ -40,6 +40,7 @@ function timeline_container(item_id, update, outer_arrays,item_style){
     //for tracking display area size
     var is_open = false;
 
+    //adds a new item to the displayed list
     function add_new(item, caller){
         if(item === undefined){
              return undefined;   
@@ -52,6 +53,7 @@ function timeline_container(item_id, update, outer_arrays,item_style){
             tl.displayed.unshift([item]);
         }
 
+        //Uses the higher value of max_display if the view is open
         var curr_max = is_open ? max_display[1]:max_display[0];
 
         if(tl.length >= curr_max){
@@ -112,7 +114,7 @@ function timeline_container(item_id, update, outer_arrays,item_style){
     return {
         add: add_new,
         more: more,
-        max_display_opend: function(amount){
+        max_display_open: function(amount){
             if(amount !== undefined){
                 max_display[1] = amount;
             }

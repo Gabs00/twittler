@@ -3,8 +3,7 @@ $(document).ready(function(){
     window.visitor = prompt('Please enter a username:'); //temporary setting
     streams.users[visitor] = [];
 
-    //timeline_container is in Timeline.js
-    //manages the history and user timeline view
+    //Implimenting Timeline.prototype.Update
     var update = function(){ 
             $(this.list).empty();
             var len = this.displayed.length-1;
@@ -28,6 +27,9 @@ $(document).ready(function(){
             this.length = this.displayed.length;
         }
 
+
+    //timeline_container is in Timeline.js
+    //manages the history and user timeline view
     var timeline = timeline_container('#history', update); 
     var initial_message = "Hello " + visitor + " your tweets will appear here for now...";
     var user_timeline = [visitor, timeline_container('#user', update)];
@@ -65,6 +67,7 @@ $(document).ready(function(){
          }
     });
 
+    //Trigger for when a username is clicked, changes the user_timeline to the target
     $('#history').on('click','.users', function(event) {
         $('#user').empty();
 
@@ -73,7 +76,8 @@ $(document).ready(function(){
         user_timeline = [username, timeline_container('#user', update)];
         iter_user= get_tweets(user_timeline[1]);
         update_user_stream();
-
+        $('body').click();
+        
         event.stopImmediatePropagation();
 
       });
