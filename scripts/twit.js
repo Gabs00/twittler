@@ -182,7 +182,7 @@ $(document).ready(function(){
 
           $(this).on('scroll', function(){
               if(scrolled+20 <= $(this).scrollTop()){
-                tl.max_display_open(tl.max_display_open()+2);
+                tl.max_display_open(tl.max_display_open()+10);
                 tl.more();
                 scrolled = $(this).scrollTop();
               }
