@@ -14,39 +14,40 @@ Timeline_Time.prototype.set_time = function(date){
 }
 
 //Gets the formatted time
-Timeline_Time.prototype.get_formatted_time = function(self){
+Timeline_Time.prototype.get_formatted_time = function(){
     var end = self.end;
     var start = self.date;
     if(self.same_hour(self)){
-        this.time = self.get_diff(self);
+        self.time = self.get_diff(self);
     }
     else{
-        this.time = date.getDate()+"/"+date.getMonth()+ " "+date.getHours() + ":" +date.getMinutes()+ self.am_pm(self);
+        self.time = date.getDate()+"/"+date.getMonth()+ " "+date.getHours() + ":" +date.getMinutes()+ self.am_pm(self);
         return time;
     }
 }
 
 //Shorthand for get_formatted_time
 Timeline_Time.prototype.gft = function(){
+    self = this.self;
     this.get_formatted_time(this);
     return this.time;
 }
 
 //Checks if time is in the am or pm
-Timeline_Time.prototype.am_pm = function(self){
+Timeline_Time.prototype.am_pm = function(){
     var end = self.end;
     var start = self.date;
 
     if(date.getHours() > 12){
-        this.ap = " pm";
+        self.ap = " pm";
     }
     else{
-        this.ap = " am";
+        self.ap = " am";
     }    
 }
 
 //Checks if start time and end time are in the exact same hour
-Timeline_Time.prototype.same_hour = function(self){
+Timeline_Time.prototype.same_hour = function(){
         var end = self.end;
         var start = self.date;
         if(start.getHours()-end.getHours()===0){
@@ -62,7 +63,7 @@ Timeline_Time.prototype.same_hour = function(self){
 }
 
 //gets the difference between now / provided time and now/ end time
-Timeline_Time.prototype.get_diff = function(self){
+Timeline_Time.prototype.get_diff = function(){
         var end = self.end;
         var start = self.date;
 
