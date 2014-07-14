@@ -1,12 +1,11 @@
 function Timeline(item_id, arrays, item_style){
     
     if(!arrays){
-        arrays = [[],[],[]];   
+        arrays = [[],[]];   
     }
     this.list = item_id;
-    this.top = arrays[0];
-    this.displayed = arrays[1];
-    this.bottom = arrays[2];
+    this.displayed = arrays[0];
+    this.hidden = arrays[1];
     
     if(item_style){
         $(this.list).addClass(item_style);  
@@ -21,9 +20,8 @@ function Timeline(item_id, arrays, item_style){
 Timeline.prototype = new Object();
 Timeline.prototype.constructor = new Timeline();
 Timeline.prototype.limits = {
-        max_display: [10,21], //Max bottom and max displayed are total entries stored
-        max_bottom: 100,    
-        max_top: 5, //max top is increments popped out of top when scrolling
+        max_display: [10,21], //Max hidden and max displayed are total entries stored
+        max_hidden: 100,    
 };
 
 Timeline.prototype.get_time = function(date){
@@ -93,8 +91,7 @@ function timeline_container(item_id, outer_arrays,item_style){
     var tl = new Timeline(item_id, outer_arrays, item_style);
 
     var max_display = tl.limits.max_display;
-    var max_bottom = tl.limits.max_bottom;
-    var max_top = tl.limits.max_top;
+    var max_hidden = tl.limits.max_hidden;
 
     //for tracking display area size
     var is_open = false;
@@ -117,11 +114,11 @@ function timeline_container(item_id, outer_arrays,item_style){
 
             var store = tl.displayed.pop().shift();
 
-            if(tl.bottom.length >= max_bottom){
-                tl.bottom.pop();                
+            if(tl.hidden.length >= max_hidden){
+                tl.hidden.pop();                
             }
 
-            tl.bottom.unshift(store);
+            tl.hidden.unshift(store);
         }       
         
         tl.Update();
@@ -135,13 +132,13 @@ function timeline_container(item_id, outer_arrays,item_style){
             amount = max;   
         }
 
-        if(amount > tl.bottom.length){
-            amount= tl.bottom.length;   
+        if(amount > tl.hidden.length){
+            amount= tl.hidden.length;   
         }
 
         var i = 0;
         while(i < amount){
-            add_new(tl.bottom.shift(), 'more');
+            add_new(tl.hidden.shift(), 'more');
             i++;
         }     
     }
@@ -160,7 +157,7 @@ function timeline_container(item_id, outer_arrays,item_style){
 
         var i = 0;
         while(i < amount){
-            tl.bottom.unshift(tl.displayed.pop().shift()); 
+            tl.hidden.unshift(tl.displayed.pop().shift()); 
             tl.Update();
             i++;
         }
@@ -171,6 +168,13 @@ function timeline_container(item_id, outer_arrays,item_style){
     return {
         add: add_new,
         more: more,
+        max_display_opend: function(amount){
+            if(amount !== undefined){
+                max_display[1] = amount;
+            }
+            return max_display[1];
+            tl.Update();
+        }
         less: less,
         limits: tl.limits,
         is_open: function(){
