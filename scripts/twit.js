@@ -181,7 +181,6 @@ $(document).ready(function(){
           var scrolled = $(this).scrollTop();
 
           $(this).on('scroll', function(){
-              console.log($(this).scrollTop());
               if(scrolled+20 <= $(this).scrollTop()){
                 tl.max_display_open(tl.max_display_open()+2);
                 tl.more();
