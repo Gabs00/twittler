@@ -160,6 +160,7 @@ $(document).ready(function(){
 
           other_tl.less();
           var tl_constants = tl.CONSTANTS();
+
           if(tl.length() < tl_constants.max_display[1]){
             tl.more();
           }
@@ -173,20 +174,39 @@ $(document).ready(function(){
                                        }
                                      });
           $(this).animate({height:"540"},300);
+          $(this).addClass('scrollbars');
+
+          $(other).removeClass('scrollbars');
+          $(other).off('scroll');
+          var scrolled = $(this).scrollTop();
+
+          $(this).on('scroll', function(){
+              console.log($(this).scrollTop());
+              if(scrolled+20 <= $(this).scrollTop()){
+                tl.max_display_open(tl.max_display_open()+2);
+                tl.more();
+                scrolled = $(this).scrollTop();
+              }
+          })
           event.stopImmediatePropagation();
       });
-      
       //Clicking the body resets the view
       $('body').on('click', function(event){
           var target = $(event.target).parent();
           var parent = panels[3];
           if($(target).attr('id') !== $(parent).attr('id')){
               if($(panels[0]).height() > panels[4] ) {
+                  var max = timeline.CONSTANTS();
                   $(panels[1]).show();
-                  timeline.less();            
+                  timeline.max_display_open(max.max_display[1]);
+                  timeline.less();
+                 
+                             
               }
               else{
                   $(panels[0]).show();
+                  var max = user_timeline[1].CONSTANTS();
+                  user_timeline[1].max_display_open(max.max_display[1]);
                   user_timeline[1].less();         
               }
               $(panels[0]).animate({height:panels[4]});

@@ -34,7 +34,7 @@ function timeline_container(item_id, update, outer_arrays,item_style){
     var tl = new Timeline(item_id, outer_arrays, item_style);
     tl.Update = update;
 
-    var max_display = tl.CONSTANTS.max_display;
+    var max_display = tl.CONSTANTS.max_display.slice();
     var max_hidden = tl.CONSTANTS.max_hidden;
 
     //for tracking display area size
@@ -95,6 +95,9 @@ function timeline_container(item_id, update, outer_arrays,item_style){
 
         if(amount === undefined){
              amount = max;
+        }
+        else{
+            max = tl.displayed.length - max_display[1];
         }
 
         if(amount > max){
