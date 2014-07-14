@@ -20,8 +20,8 @@ function Timeline(item_id, update, arrays, item_style){
 Timeline.prototype = new Object();
 Timeline.prototype.constructor = new Timeline();
 Timeline.prototype.CONSTANTS = {
-        max_display: [10,21], //Max hidden and max displayed are total entries stored
-        max_hidden: 100,    
+        max_display: [10,23], //Max hidden and max displayed are total entries stored
+        max_hidden: 500,    
 };
 
 Timeline.prototype.Time = new Timeline_Time();
